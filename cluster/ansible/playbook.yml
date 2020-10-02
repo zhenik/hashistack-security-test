@@ -1,0 +1,9 @@
+# User-story
+---
+- hosts: localhost
+  tasks:
+    - name: Unset some env variales
+      shell: unset VAULT_TOKEN && unset CONSUL_HTTP_TOKEN
+
+    - name: Consul - vault integration
+
