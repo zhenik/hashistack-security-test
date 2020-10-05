@@ -4,7 +4,7 @@ nomad_version := 0.12.5
 vault_version := 1.5.3
 
 
-.PHONY: consul vault stop
+.PHONY: consul vault nomad stop
 
 ### consul installation
 install: download unzip
@@ -41,6 +41,9 @@ consul-local:
 # sudo kill -TERM 4635
 vault:
 	nohup ./vault server -dev -dev-root-token-id=master -config=cluster/config/vault_config.hcl </dev/null >/dev/null 2>&1 &
+
+nomad:
+	./nomad agent -dev-connect -config=cluster/config/nomad_config.hcl
 
 stop:
 	kill $(ps aux | grep './vault server' | awk '{print $2}')
