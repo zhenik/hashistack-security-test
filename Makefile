@@ -45,6 +45,6 @@ vault:
 nomad:
 	./nomad agent -dev-connect -config=cluster/config/nomad_config.hcl
 
+#kill $(ps aux | grep './vault server' | awk '{print $2}')
 stop:
-	kill $(ps aux | grep './vault server' | awk '{print $2}')
-
+	pkill -f vault | true
