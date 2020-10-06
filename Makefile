@@ -42,6 +42,9 @@ consul-local:
 vault:
 	nohup ./vault server -dev -dev-root-token-id=master -config=cluster/config/vault_config.hcl </dev/null >/dev/null 2>&1 &
 
+consul:
+	./consul agent -dev -config-file=cluster/config/consul_config.hcl
+
 nomad:
 	./nomad agent -dev-connect -config=cluster/config/nomad_config.hcl
 
