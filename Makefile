@@ -40,7 +40,8 @@ consul-local:
 # ps -x
 # sudo kill -TERM 4635
 vault:
-	nohup ./vault server -dev -dev-root-token-id=master -config=cluster/config/vault_config.hcl </dev/null >/dev/null 2>&1 &
+	#nohup ./vault server -dev -dev-root-token-id=master -config=cluster/config/vault_config.hcl </dev/null >/dev/null 2>&1 &
+	./vault server -dev -dev-root-token-id=master -config=cluster/config/vault_config.hcl
 
 consul:
 	./consul agent -dev -config-file=cluster/config/consul_config.hcl
