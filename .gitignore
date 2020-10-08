@@ -1,7 +1,6 @@
-.idea
+../.idea
 *.iml
 
-# binaries
-consul
-nomad
-vault
+.minio.sys
+.vagrant
+
