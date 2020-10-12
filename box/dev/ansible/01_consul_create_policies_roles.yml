@@ -48,29 +48,10 @@
   environment:
     CONSUL_HTTP_TOKEN: "{{ admin_token.stdout }}"
 
-#######################
-### TESTS policies
-#######################
-### ACL
-- name: List acl - admin token - allow
-  shell: consul acl token list
-  environment:
-    CONSUL_HTTP_TOKEN: "{{ admin_token.stdout }}"
-
-- name: List acl - producer token - deny
-  shell: consul acl token list
-  register: consul_acl_list_try1
-  environment:
-    CONSUL_HTTP_TOKEN: "{{ producer_token.stdout }}"
-  failed_when: consul_acl_list_try1.rc == 0
-
-- name: List acl - consumer token - deny
-  shell: consul acl token list
-  register: consul_acl_list_try2
-  environment:
-    CONSUL_HTTP_TOKEN: "{{ consumer_token.stdout }}"
-  failed_when: consul_acl_list_try2.rc == 0
-
-### K/V todo
-
-### Intentions todo
+# todo: set facts
+- name: Run tests for policies
+  include: test/tests.yml
+  vars:
+    admin_token: "{{ admin_token.stdout }}"
+    producer_token: "{{ producer_token.stdout }}"
+    consumer_token: "{{ consumer_token.stdout }}"
