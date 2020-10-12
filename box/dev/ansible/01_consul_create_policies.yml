@@ -1,11 +1,16 @@
 - name: Set variables
   set_fact:
     consul_master_token: "master"
+    admin_token: ""
+    producer_token: ""
+    consumer_token: ""
     admin_policy: "admin-policy"
     producer_policy: "producer-policy"
     consumer_policy: "consumer-policy"
 
-# Create policies
+#######################
+### CREATE policies
+#######################
 - name: Consul - create admin team policy
   shell:
     cmd: consul acl policy create -name {{ admin_policy }} -rules @policies/consul/admin_policy.hcl
@@ -25,7 +30,6 @@
 #######################
 ### GENERATE tokens
 #######################
-
 - name: Generate admin token - with master token
   shell: consul acl token create -description="Admin token" -policy-name={{ admin_policy }} -format=json | jq -r .SecretID
   register: admin_token
@@ -48,10 +52,10 @@
   environment:
     CONSUL_HTTP_TOKEN: "{{ admin_token.stdout }}"
 
-# todo: set facts
-- name: Run tests for policies
-  include: test/tests.yml
-  vars:
+- set_fact:
     admin_token: "{{ admin_token.stdout }}"
     producer_token: "{{ producer_token.stdout }}"
     consumer_token: "{{ consumer_token.stdout }}"
+
+- name: Run tests for policies
+  include: test/tests.yml
